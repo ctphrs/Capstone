@@ -7,23 +7,3 @@ It’s not a story the Jedi would tell you. It’s a Sith legend. Darth Plagueis
 He had such a knowledge of the dark side that he could even keep the ones he cared about from dying. The dark side of the Force is a pathway to many abilities some consider to be unnatural. He became so powerful… the only thing he was afraid of was losing his power, which eventually, of course, he did.
 
 Unfortunately, he taught his apprentice everything he knew, then his apprentice killed him in his sleep. Ironic. He could save others from death, but not himself.
-
-               __
-    .-.__      \ .-.  ___  __|_|
-'--.-.-(   \/\;;\_\.-._______.-.
-    (-)___     \ \ .-\ \;;\(   \       \ \
-     Y    '---._\_((Q)) \;;\\ .-\     __(_)
-     I           __'-' / .--.((Q))---'    \,
-     I     ___.-:    \|  |   \'-'_          \
-     A  .-'      \ .-.\   \   \ \ '--.__     '\
-     |  |____.----((Q))\   \__|--\_      \     '
-        ( )        '-'  \_  :  \-' '--.___\
-         Y                \  \  \       \(_)
-         I                 \  \  \         \,
-         I                  \  \  \          \
-         A                   \  \  \          '\
-         |              snd   \  \__|           '
-                               \_:.  \
-                                 \ \  \
-                                  \ \  \
-                                   \_\_|
