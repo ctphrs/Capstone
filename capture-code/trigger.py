@@ -1,11 +1,12 @@
 import capture
 import time
+import math
 
 class Trigger:
 
     def __init__(self):
         self.period = 60 #seconds
-        self.duration = 10 #seconds
+        self.duration = 55 #seconds
         self.maximum_captures = 1000 #captures before self-termination
 
     def timed_trigger_video(self):
@@ -14,7 +15,7 @@ class Trigger:
             cap.record_func(record_duration = self.duration)
             now = time.localtime()
             #print("INFO: Video recorded at", now)
-            time.sleep(self.period)
+            time.sleep(abs(self.period - self.duration))
 
 
 
