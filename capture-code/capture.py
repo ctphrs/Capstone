@@ -13,7 +13,8 @@ class DogCapture:
 
     def __init__(self): #in the future load these from a config file
         self.camera = PiCamera() #initialize camera object
-        self.camera.resolution = (768, 768) #set resolution
+        self.camera.resolution = (1920, 1080) #set resolution
+        #max resolution 3280,2464
         self.camera.framerate = 24 #set framerate
         self.vtype = '.h264' #video type
         self.itype = '.png' #image type
