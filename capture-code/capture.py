@@ -22,10 +22,11 @@ class DogCapture:
         self.default_record_duration = 5 #seconds
 
     def time_naming(self):
-        now = time.localtime()
-        nowstr = ''+str(now.tm_year)+str(now.tm_mon)+\
-                str(now.tm_mday)+'-'+str(now.tm_hour)+\
-                str(now.tm_min)+str(now.tm_sec)
+        #now = time.localtime()
+        #nowstr = ''+str(now.tm_year)+str(now.tm_mon)+\
+        #        str(now.tm_mday)+'-'+str(now.tm_hour)+\
+        #        str(now.tm_min)+str(now.tm_sec)
+        nowstr = time.strftime('%Y%m%d-%H%M%S')
         return nowstr
 
 
