@@ -89,7 +89,7 @@ def linear_interp(string, tenacity=10):
                 moving_marker[1] = i
                 break_markers.append(moving_marker[:]) #Append a copy
 
-    newstring = string[:]
+    newstring = np.copy(string)
     #Interpolate over each break
     for marker in break_markers:
         bl = marker[1] - marker[0] + 1
@@ -116,9 +116,9 @@ Runs a moving average of window length rolling_window across the string, produci
 a new, smoother string.
 '''
 def smooth_string(string, rolling_window=15):
+    newstring = np.copy(string)
     xwindow = np.array([])
     ywindow = np.array([])
-    newstring = string[:,:]
 
     #Across the whole string
     for i in range(len(string)):
