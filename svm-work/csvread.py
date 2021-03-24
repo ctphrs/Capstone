@@ -4,7 +4,6 @@ import numpy as np #We'll use numpy for everything. Might as well start now.
 #Read a DeepLabCut CSV file and transform it into useful numpy arrays
 def read_dlc(filename):
 
-    #Do we need to close this file? TODO
     with open(filename) as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
 
