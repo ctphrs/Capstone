@@ -6,7 +6,7 @@ class Trigger:
 
     def __init__(self):
         self.period = 60 #seconds
-        self.duration = 55 #seconds
+        self.duration = 15 #seconds
         self.maximum_captures = 1000 #captures before self-termination
 
     def timed_trigger_video(self):

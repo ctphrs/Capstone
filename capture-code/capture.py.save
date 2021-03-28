@@ -3,6 +3,14 @@ import time
 
 class DogCapture:
 
+    '''
+    self.camera = None
+    self.vtype = None
+    self.itype = None
+    self.default_capture_location = None
+    self.default_record_duration = None
+    '''
+
     def __init__(self): #in the future load these from a config file
         self.camera = PiCamera() #initialize camera object
         self.camera.resolution = (1920, 1080) #set resolution
@@ -10,10 +18,10 @@ class DogCapture:
         self.camera.framerate = 24 #set framerate
         self.vtype = '.h264' #video type
         self.itype = '.png' #image type
-        self.default_capture_location = '/mnt/share'
-        self.default_record_duration = 5 #seconds
-
-    def time_naming(self):
+        self.default_capture_location = '/media/pi/261635ad-1635-4878-a066-1969898ed691'
+	
+	self.default_record_duration = 5 #seconds
+	    def time_naming(self):
         #now = time.localtime()
         #nowstr = ''+str(now.tm_year)+str(now.tm_mon)+\
         #        str(now.tm_mday)+'-'+str(now.tm_hour)+\
