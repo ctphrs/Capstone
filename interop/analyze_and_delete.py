@@ -3,6 +3,7 @@ import os
 import shutil #to move the .csvfile
 #import deeplabcut
 
+#TODO: double-check variable names
 def find_latest_h264(video_path):
     #For every mp4 video in the specified path
     video_path = '/home/share'
@@ -15,6 +16,9 @@ def find_latest_h264(video_path):
     print("found latest:",latest_file)
     return latest_file
 
+#TODO: write function to re-encode and resize
+
+#TODO: double-check variable names
 def analyze_and_delete(video_file):
     #Run all DLC stuff to analyze it.
     config_path = '/home/CoffeeOverhead-AllenWilson-2021-02-23/config.yaml'
@@ -28,16 +32,16 @@ def analyze_and_delete(video_file):
     else:
         print("File doesn't exist!")
 
-    return
-
+#TODO: double-check variable names
 def move_all_csvs(video_path,csv_destination):
     #Move any and all CSV files from that directory to dest.
     list_of_csv = glob.glob(video_path + '/*.csv')
     for file in list_of_csv:
-            original = r'' + file
-            filename = file.replace(video_path, '')
-            target = r'' + csv_destination + filename
-            shutil.move(original, target)
+        original = r'' + file
+        filename = file.replace(video_path, '')
+        target = r'' + csv_destination + filename
+        shutil.move(original, target)
+    print('success: moved all CSVs')
 
 
 if __name__ == '__main__':
