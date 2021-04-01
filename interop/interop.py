@@ -52,4 +52,8 @@ if __name__ == '__main__':
         csv_in_arch = funcs.move(csv_in_wrk, csv_archive)
         
         #Delete all in wrk
+        funcs.delete_all(wrk_dir)
         
+        #For now, just print data
+        #TODO: send off to Corinne
+        print(movement_list)

@@ -63,3 +63,9 @@ def move(file, new_directory):
         print("File doesn't exist:", file)
         print("OR")
         print("Directory doesn't exist:", new_directory)
+
+
+#TODO: implement
+#delete every file in a specified directory
+def delete_all(dir_name):
+    pass
