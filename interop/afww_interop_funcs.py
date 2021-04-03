@@ -2,7 +2,7 @@ import glob
 import sys
 import os
 import shutil #to move the .csv file
-import deeplabcut
+#import deeplabcut
 import subprocess
 
 #Given a directory and a file extension
@@ -65,7 +65,9 @@ def move(file, new_directory):
         print("Directory doesn't exist:", new_directory)
 
 
-#TODO: implement
 #delete every file in a specified directory
 def delete_all(dir_name):
-    pass
+    list_of_files = glob.glob(dir_name + '/*')
+    for file_or_dir in list_of_files:
+        os.remove(file_or_dir)
+    return

@@ -44,7 +44,7 @@ if __name__ == '__main__':
         csv_in_wrk = funcs.find_latest_file(wrk_dir, 'csv')
         
         #Do stats analysis
-        movement_list = stats.analyze(csv_in_wrk, prob_floor=prob_floor,
+        movement_list = stats.analyze2(csv_in_wrk, prob_floor=prob_floor,
             prob_floor_diff=prob_floor_diff, tenacity=tenacity,
             rolling_window=rolling_window, fps=fps, ppm=ppm)
         
