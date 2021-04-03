@@ -51,7 +51,27 @@ def score_track(track, fps=30, ppm=1000):
 
     return score
 
-def analyze(filename, prob_floor = 0.95, prob_floor_diff = 0.95,
+'''
+given a processed track, score the thing WITHOUT VISIBILITY ACCOUNTING
+'''
+def score_tracki_novis(track, fps=30, ppm=1000):
+    #First, euclidify and integrate.
+    euclidified = integrator.euclidify(track)
+    integrated = integrator.integrate(euclidified)
+
+    vid_frames = euclidified.size
+    vid_framerate = fps
+
+    #Calculate various discounts for the things that change between videos and setups
+    time_discount = scorer.factor_time(vid_frames, vid_framerate)
+    size_discount = scorer.factor_size(ppm)
+
+    #Factor in all of the different discounts
+    score = integrated / (time_discount * size_discount)
+
+    return score
+
+def analyze1(filename, prob_floor = 0.95, prob_floor_diff = 0.95,
             tenacity = 15, rolling_window = 20, fps = 30, ppm = 1000):
     #read the file
     main_header, main_data = csvread.read_dlc(filename)
@@ -127,6 +147,38 @@ def analyze(filename, prob_floor = 0.95, prob_floor_diff = 0.95,
 
     return (activity_scores, alertness_scores)
 
+def analyze2(filename, prob_floor = 0.95, prob_floor_diff = 0.95,
+            tenacity = 15, rolling_window = 20, fps = 30, ppm = 1000):
+    #read the file
+    main_header, main_data = csvread.read_dlc(filename)
+
+    #Joints representing activity
+    act_header, act_data = csvread.extract_features(['sldr','hnch','head',
+        'nose'], main_header, main_data)
+    joint_sldr = act_data[0]
+    joint_hnch = act_data[1]
+    joint_head = act_data[2]
+    joint_nose = act_data[3]
+
+    #Track
+    sldr_track = make_and_process_string(joint_sldr,
+        prob_floor, tenacity, rolling_window)
+    hnch_track = make_and_process_string(joint_hnch,
+        prob_floor, tenacity, rolling_window)
+    head_track = make_and_process_string(joint_head,
+        prob_floor, tenacity, rolling_window)
+    nose_track = make_and_process_string(joint_nose,
+        prob_floor, tenacity, rolling_window)
+
+    #Score
+    score_sldr = score_track(sldr_track, fps, ppm)
+    score_hnch = score_track(hnch_track, fps, ppm)
+    score_head = score_track(head_track, fps, ppm)
+    score_nose = score_track(nose_track, fps, ppm)
+
+    return([('sldr',score_sldr),('hnch',score_hnch),('head',score_head),
+        ('nose',score_nose)])
+
 if __name__ == '__main__':
 
     #Ensure that command-line users are appropraitely chastized
@@ -134,11 +186,12 @@ if __name__ == '__main__':
         print("Please provide exactly one argument when calling from command line")
         print("Please make sure that argument is the correct path to a CSV file")
         print("Please make sure that the CSV file was produced by DeepLabCut")
+        exit()
 
     #Perform correct services for command-line users.
     #TODO: not accepting parameters like tenacity or ppm
     #CLI users may want this.
-    results = analyze(sys.argv[1])
+    results = analyze2(sys.argv[1])
     print(results)
 
     #I'd return, but this isn't actually a function.

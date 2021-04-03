@@ -6,7 +6,7 @@ import scorer
 import numpy as np
 
 #Get a huge matrix out of the CSV
-bighead, bigdat = csvread.read_dlc('skeleton.csv')
+bighead, bigdat = csvread.read_dlc('Test_3_25DLC_resnet_50_CoffeeOverheadFeb23shuffle1_600000.csv')
 
 #Get a smaller matrix containing only head and sldr data
 littlehead, littledat = csvread.extract_features(['head','sldr'], bighead, bigdat)
@@ -21,7 +21,7 @@ head_on_sldr = np.subtract(headpos, sldrpos)
 head_on_sldr[:,2] = np.minimum(headpos[:,2],sldrpos[:,2])
 
 #Rename for consistency
-test_set = head_on_sldr
+test_set = headpos
 
 #Perform tracking analysis
 test_string = stringer.make_strings(test_set, prob_floor=0.95)
@@ -29,19 +29,19 @@ interped = stringer.linear_interp(test_string, tenacity=15)
 smoothed = stringer.smooth_string(interped, rolling_window=20)
 
 test_set = stringer.make_strings(test_set, prob_floor=0.95)
-print('set1')
-print(test_set)
+#print('set1')
+#print(test_set)
 test_set = stringer.linear_interp(test_set, tenacity=15)
-print('set2')
-print(test_set)
+#print('set2')
+#print(test_set)
 test_set = stringer.smooth_string(test_set, rolling_window=20)
-print('set3')
-print(test_set)
+#print('set3')
+#print(test_set)
 
 #Display results to the user
-#plotter.plot_joint(test_string)
-#plotter.plot_joint(interped)
-#plotter.plot_joint(smoothed)
+plotter.plot_joint(test_string)
+plotter.plot_joint(interped)
+plotter.plot_joint(smoothed)
 
 
 euclidified = integrator.euclidify(smoothed)
