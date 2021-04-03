@@ -19,8 +19,11 @@ def find_latest_file(video_dir, ext):
     #Discover which is newest
     latest_file = max(list_of_videos, key=os.path.getctime)
 
+    #remember its creation time
+    ctime = os.path.getctime(latest_file)
+
     #Return the name
-    return latest_file
+    return (latest_file, ctime)
 
 
 #Given a video file (assumed h264)

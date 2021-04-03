@@ -24,7 +24,7 @@ if __name__ == '__main__':
     while True:
         
         #Find first video
-        vid_on_nfs = funcs.find_latest_file(nfs_dir,'h264')
+        vid_on_nfs,ctime = funcs.find_latest_file(nfs_dir,'h264')
         if vid_on_nfs == None:
             continue
         
@@ -41,7 +41,7 @@ if __name__ == '__main__':
         funcs.dlc_analyze(mp4_in_wrk, config_path)
         
         #find CSV that was made
-        csv_in_wrk = funcs.find_latest_file(wrk_dir, 'csv')
+        csv_in_wrk,*ignore = funcs.find_latest_file(wrk_dir, 'csv')
         
         #Do stats analysis
         movement_list = stats.analyze2(csv_in_wrk, prob_floor=prob_floor,
@@ -56,4 +56,4 @@ if __name__ == '__main__':
         
         #For now, just print data
         #TODO: send off to Corinne
-        print(movement_list)
+        print(movement_list,ctime)
