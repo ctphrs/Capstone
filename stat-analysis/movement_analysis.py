@@ -54,7 +54,7 @@ def score_track(track, fps=30, ppm=1000):
 '''
 given a processed track, score the thing WITHOUT VISIBILITY ACCOUNTING
 '''
-def score_tracki_novis(track, fps=30, ppm=1000):
+def score_track_novis(track, fps=30, ppm=1000):
     #First, euclidify and integrate.
     euclidified = integrator.euclidify(track)
     integrated = integrator.integrate(euclidified)
