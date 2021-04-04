@@ -26,6 +26,24 @@ def find_latest_file(video_dir, ext):
     return (latest_file, ctime)
 
 
+def find_oldest_file(video_dir, ext):
+    #For every mp4 video in the specified path
+    list_of_videos = glob.glob(video_dir + '/*.' + ext)
+
+    if len(list_of_videos) == 0 :
+        print('No such files:', ext)
+        return None
+
+    #Discover which is newest
+    latest_file = min(list_of_videos, key=os.path.getctime)
+
+    #remember its creation time
+    ctime = os.path.getctime(latest_file)
+
+    #Return the name
+    return (latest_file, ctime)
+
+
 #Given a video file (assumed h264)
 #Return path to newly-encoded mp4
 def encode_960(h264_file):

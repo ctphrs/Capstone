@@ -26,7 +26,7 @@ if __name__ == '__main__':
     #Loop
     while True:
         files_avail = len(os.listdir(nfs_dir))
-        if files_avail <= 0:
+        if files_avail < 2:
             print('no video available!')
             time.sleep(60)
             continue
@@ -34,7 +34,7 @@ if __name__ == '__main__':
         time.sleep(10)
 
         #Find first video
-        vid_on_nfs,ctime = funcs.find_latest_file(nfs_dir,'h264')
+        vid_on_nfs,ctime = funcs.find_oldest_file(nfs_dir,'h264')
         if vid_on_nfs == None:
             continue
         
