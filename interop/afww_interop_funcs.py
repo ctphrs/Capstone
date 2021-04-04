@@ -102,15 +102,15 @@ def insert_data(head, nose, haunches, shoulder, timestamp):
     uid = 'sa'
     pw = 'CNU1$cool'
 
-    datetime = datetime.datetime.fromtimestamp(timestamp)
+    dt = datetime.datetime.fromtimestamp(timestamp)
 
     conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+uid+';PWD='+pw)
 
     cursor = conn.cursor()
 
     cursor.execute('''
-                   INSERT INTO SPCA.dbo.Movement
-                   VALUES (3, head, nose, haunches, shoulder, datetime);
+                   INSERT INTO SPCA.dbo.Movement (Dog_ID, Head, Nose, Haunches, Shoulder, Time_Stamp)
+                   VALUES (3, head, nose, haunches, shoulder, dt);
                    ''')
 
     conn.commit()

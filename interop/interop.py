@@ -68,5 +68,5 @@ if __name__ == '__main__':
         nose = movement_list[3][1]
         hnch = movement_list[1][1]
         sldr = movement_list[0][1]
-        insert_data(head=head, nose=nose, haunches=hnch,
+        funcs.insert_data(head=head, nose=nose, haunches=hnch,
                 shoulder=sldr, timestamp = ctime)
