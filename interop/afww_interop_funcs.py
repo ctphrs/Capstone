@@ -110,8 +110,8 @@ def insert_data(head, nose, haunches, shoulder, timestamp):
 
     cursor.execute('''
                    INSERT INTO SPCA.dbo.Movement (Dog_ID, Head, Nose, Haunches, Shoulder, Time_Stamp)
-                   VALUES (3, head, nose, haunches, shoulder, dt);
-                   ''')
+                   VALUES (3, ?, ?, ?, ?, ?);
+                   ''', head, nose, haunches, shoulder, dt)
 
     conn.commit()
     return

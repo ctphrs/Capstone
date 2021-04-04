@@ -62,8 +62,11 @@ if __name__ == '__main__':
         #Delete all in wrk
         funcs.delete_all(wrk_dir)
         
-        #For now, just print data
-        #TODO: send off to Corinne
+        #PRINT to user
+        print('RESULTS')
+        print(movement_list)
+
+        #Send data off to Corinne
         head = movement_list[2][1]
         nose = movement_list[3][1]
         hnch = movement_list[1][1]
