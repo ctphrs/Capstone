@@ -5,6 +5,7 @@ import shutil #to move the .csv file
 import deeplabcut
 import subprocess
 import pyodbc
+import datetime
 
 #Given a directory and a file extension
 #Return latest file of that type in dir
