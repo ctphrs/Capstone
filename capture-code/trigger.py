@@ -16,7 +16,9 @@ class Trigger:
         cap = capture.DogCapture()
         for i in range (self.maximum_captures):
             vid = cap.record_func(record_duration = self.duration, capture_location=self.record_dir)
+            print("Moving file...")
             shutil.move(vid,self.final_dir)
+            print("Moved file!")
             time.sleep(abs(self.period - self.duration))
 
 
