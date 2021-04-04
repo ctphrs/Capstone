@@ -2,7 +2,7 @@ import glob
 import sys
 import os
 import shutil #to move the .csv file
-#import deeplabcut
+import deeplabcut
 import subprocess
 
 #Given a directory and a file extension
@@ -34,7 +34,7 @@ def encode_960(h264_file):
     mp4name = name + '.mp4'
 
     #re-encode. this IS a blocking function, thanks!
-    subprocess.run('ffmpeg', '-i', h264_file, '-vf', 'scale=960:-1', mp4name)
+    subprocess.run(['ffmpeg', '-i', h264_file, '-vf', 'scale=960:-1', mp4name])
 
     #Return name of new video
     return mp4name
@@ -48,10 +48,10 @@ def dlc_analyze(video_file, config_path):
 
 
 #Check for file existence, then delete.
-def delete(file):
+def delete(a_file):
     #Check for existence
-    if os.path.isfile(video_file):
-        os.remove(video_file)
+    if os.path.isfile(a_file):
+        os.remove(a_file)
     else:
         print("File doesn't exist:", file)
 

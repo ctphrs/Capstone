@@ -1,3 +1,6 @@
+import os
+import time
+
 import sys
 import getpass
 sys.path.insert(0,'../stat-analysis')
@@ -8,7 +11,7 @@ import movement_analysis as stats
 
 nfs_dir = '/home/share'
 wrk_dir = '/home/'+user+'/afww-interop-working'
-config_path = '/home/'+user+'/SOME-DLC/config.yaml'
+config_path = '/home/'+user+'/CoffeeOverhead-AllenWilson-2021-02-23/config.yaml'
 csv_archive = '/home/'+user+'/CSV'
 
 prob_floor = 0.95
@@ -22,7 +25,14 @@ if __name__ == '__main__':
 
     #Loop
     while True:
+        files_avail = len(os.listdir(nfs_dir))
+        if files_avail <= 0:
+            print('no video available!')
+            time.sleep(60)
+            continue
         
+        time.sleep(10)
+
         #Find first video
         vid_on_nfs,ctime = funcs.find_latest_file(nfs_dir,'h264')
         if vid_on_nfs == None:
@@ -56,4 +66,5 @@ if __name__ == '__main__':
         
         #For now, just print data
         #TODO: send off to Corinne
+        print("RESULTS")
         print(movement_list,ctime)
