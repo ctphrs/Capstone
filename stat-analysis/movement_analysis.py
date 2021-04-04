@@ -171,10 +171,10 @@ def analyze2(filename, prob_floor = 0.95, prob_floor_diff = 0.95,
         prob_floor, tenacity, rolling_window)
 
     #Score
-    score_sldr = score_track(sldr_track, fps, ppm)
-    score_hnch = score_track(hnch_track, fps, ppm)
-    score_head = score_track(head_track, fps, ppm)
-    score_nose = score_track(nose_track, fps, ppm)
+    score_sldr = score_track_novis(sldr_track, fps, ppm)
+    score_hnch = score_track_novis(hnch_track, fps, ppm)
+    score_head = score_track_novis(head_track, fps, ppm)
+    score_nose = score_track_novis(nose_track, fps, ppm)
 
     return([('sldr',score_sldr),('hnch',score_hnch),('head',score_head),
         ('nose',score_nose)])
