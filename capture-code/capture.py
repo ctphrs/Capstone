@@ -42,10 +42,12 @@ class DogCapture:
             capture_location = self.default_capture_location
         nowstr = self.time_naming()
         print('Recording at:', nowstr, 'for', record_duration, 'seconds.')
-        self.camera.start_recording(capture_location + '/' + nowstr + self.vtype)
+        vid_path = capture_location + '/' + nowstr + self.vtype
+        self.camera.start_recording(vid_path)
         time.sleep(record_duration)
         self.camera.stop_recording()
         print('Done!')
+        return vid_path
     
 
 if __name__ == '__main__':

@@ -1,6 +1,7 @@
 import capture
 import time
 import math
+import shutil
 
 class Trigger:
 
@@ -8,13 +9,14 @@ class Trigger:
         self.period = 60 #seconds
         self.duration = 15 #seconds
         self.maximum_captures = 1000 #captures before self-termination
+        self.record_dir = '/home/pi/record'
+        self.final_dir = '/mnt/share'
 
     def timed_trigger_video(self):
         cap = capture.DogCapture()
         for i in range (self.maximum_captures):
-            cap.record_func(record_duration = self.duration)
-            now = time.localtime()
-            #print("INFO: Video recorded at", now)
+            vid = cap.record_func(record_duration = self.duration, capture_location=self.record_dir)
+            shutil.move(vid,self.final_dir)
             time.sleep(abs(self.period - self.duration))
 
 
