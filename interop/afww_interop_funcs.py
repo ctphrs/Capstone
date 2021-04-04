@@ -4,6 +4,7 @@ import os
 import shutil #to move the .csv file
 import deeplabcut
 import subprocess
+import pyodbc
 
 #Given a directory and a file extension
 #Return latest file of that type in dir
@@ -91,4 +92,25 @@ def delete_all(dir_name):
     list_of_files = glob.glob(dir_name + '/*')
     for file_or_dir in list_of_files:
         os.remove(file_or_dir)
+    return
+
+#insert movement data into SPCA database
+def insert_data(head, nose, haunches, shoulder, timestamp):
+    server = 'afww-desktop'
+    database = 'SPCA'
+    uid = 'sa'
+    pw = 'CNU1$cool'
+
+    datetime = datetime.datetime.fromtimestamp(timestamp)
+
+    conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+uid+';PWD='+pw)
+
+    cursor = conn.cursor()
+
+    cursor.execute('''
+                   INSERT INTO SPCA.dbo.Movement
+                   VALUES (3, head, nose, haunches, shoulder, datetime);
+                   ''')
+
+    conn.commit()
     return

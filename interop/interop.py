@@ -31,7 +31,7 @@ if __name__ == '__main__':
             time.sleep(60)
             continue
 
-        #Find first video
+        #Find oldest video
         vid_on_nfs,ctime = funcs.find_oldest_file(nfs_dir,'h264')
         if vid_on_nfs == None:
             continue
@@ -64,5 +64,9 @@ if __name__ == '__main__':
         
         #For now, just print data
         #TODO: send off to Corinne
-        print("RESULTS")
-        print(movement_list,ctime)
+        head = movement_list[2][1]
+        nose = movement_list[3][1]
+        hnch = movement_list[1][1]
+        sldr = movement_list[0][1]
+        insert_data(head=head, nose=nose, haunches=hnch,
+                shoulder=sldr, timestamp = ctime)
