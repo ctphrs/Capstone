@@ -30,8 +30,6 @@ if __name__ == '__main__':
             print('no video available!')
             time.sleep(60)
             continue
-        
-        time.sleep(10)
 
         #Find first video
         vid_on_nfs,ctime = funcs.find_oldest_file(nfs_dir,'h264')
