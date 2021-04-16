@@ -6,7 +6,7 @@ import scorer
 import numpy as np
 
 #Get a huge matrix out of the CSV
-bighead, bigdat = csvread.read_dlc('Test_3_25DLC_resnet_50_CoffeeOverheadFeb23shuffle1_600000.csv')
+bighead, bigdat = csvread.read_dlc('/home/afww/Capstone/stat-analysis/video1DLC_resnet_50_alfonsoApr14shuffle1_350000.csv')
 
 #Get a smaller matrix containing only head and sldr data
 littlehead, littledat = csvread.extract_features(['head','sldr'], bighead, bigdat)

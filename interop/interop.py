@@ -11,15 +11,15 @@ import movement_analysis as stats
 
 nfs_dir = '/home/share'
 wrk_dir = '/home/'+user+'/afww-interop-working'
-config_path = '/home/'+user+'/CoffeeOverhead-AllenWilson-2021-02-23/config.yaml'
-csv_archive = '/home/'+user+'/CSV'
+config_path = '/home/'+user+'/alfonso-net/alfonso-wd-team-2021-04-14/config.yaml'
+csv_archive = '/home/'+user+'/ARCH-04-16-NODELETE'
 
 prob_floor = 0.95
 prob_floor_diff = 0.95
-tenacity = 15
-rolling_window = 20
+tenacity = 5
+rolling_window = 8 
 fps = 30
-ppm=1000
+ppm = 300
 
 if __name__ == '__main__':
 
@@ -28,7 +28,7 @@ if __name__ == '__main__':
         files_avail = len(os.listdir(nfs_dir))
         if files_avail < 2:
             print('no video available!')
-            time.sleep(60)
+            time.sleep(5)
             continue
 
         #Find oldest video
@@ -47,6 +47,9 @@ if __name__ == '__main__':
         
         #analyze video
         funcs.dlc_analyze(mp4_in_wrk, config_path)
+
+        #Also make labeled video!!
+        funcs.dlc_label(mp4_in_wrk, config_path)
         
         #find CSV that was made
         csv_in_wrk,*ignore = funcs.find_latest_file(wrk_dir, 'csv')
@@ -60,7 +63,10 @@ if __name__ == '__main__':
         csv_in_arch = funcs.move(csv_in_wrk, csv_archive)
         
         #Delete all in wrk
-        funcs.delete_all(wrk_dir)
+        #funcs.delete_all(wrk_dir)
+
+        #Instead of deleting, archive all in wrk.
+        funcs.archive_all(wrk_dir, csv_archive)
         
         #PRINT to user
         print('RESULTS')

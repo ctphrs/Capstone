@@ -71,6 +71,37 @@ def score_track_novis(track, fps=30, ppm=1000):
 
     return score
 
+'''
+given a processed track, score the thing WITH NEW VISIBILITY ACCOUNTING
+'''
+def score_track_newvis(track, fps=30, ppm=1000):
+    #First, euclidify and integrate.
+    euclidified = integrator.euclidify(track)
+    integrated = integrator.integrate(euclidified)
+
+    vid_frames = euclidified.size
+    vid_framerate = fps
+
+    #Calculate various discounts for the things that change between videos and setups
+    visible_discount = scorer.visible_time(euclidified)
+    time_discount = scorer.factor_time(vid_frames, vid_framerate)
+    size_discount = scorer.factor_size(ppm)
+
+    print('int',integrated)
+    print('vis',visible_discount)
+    print('time',time_discount)
+    print('fps',fps)
+    print('size',size_discount)
+    print('ppm',ppm)
+
+    if visible_discount < 0.5:
+        return 0.0
+
+    #Factor in all of the different discounts
+    score = integrated / (time_discount * size_discount * visible_discount)
+
+    return score
+
 def analyze1(filename, prob_floor = 0.95, prob_floor_diff = 0.95,
             tenacity = 15, rolling_window = 20, fps = 30, ppm = 1000):
     #read the file
@@ -171,10 +202,68 @@ def analyze2(filename, prob_floor = 0.95, prob_floor_diff = 0.95,
         prob_floor, tenacity, rolling_window)
 
     #Score
-    score_sldr = score_track_novis(sldr_track, fps, ppm)
-    score_hnch = score_track_novis(hnch_track, fps, ppm)
-    score_head = score_track_novis(head_track, fps, ppm)
-    score_nose = score_track_novis(nose_track, fps, ppm)
+    score_sldr = score_track_newvis(sldr_track, fps, ppm)
+    score_hnch = score_track_newvis(hnch_track, fps, ppm)
+    score_head = score_track_newvis(head_track, fps, ppm)
+    score_nose = score_track_newvis(nose_track, fps, ppm)
+
+    return([('sldr',score_sldr),('hnch',score_hnch),('head',score_head),
+        ('nose',score_nose)])
+
+def threestep(filename, prob_floor = 0.95, prob_floor_diff = 0.95,
+            tenacity = 15, rolling_window = 20, fps = 30, ppm = 1000):
+    #read the file
+    main_header, main_data = csvread.read_dlc(filename)
+
+    #Joints representing activity
+    act_header, act_data = csvread.extract_features(['sldr','hnch','head',
+        'nose'], main_header, main_data)
+    joint_sldr = act_data[0]
+    joint_hnch = act_data[1]
+    joint_head = act_data[2]
+    joint_nose = act_data[3]
+
+    sldr_raw = stringer.make_strings(joint_sldr, prob_floor=prob_floor)
+    sldr_int = stringer.linear_interp(sldr_raw, tenacity=tenacity)
+    sldr_smt = stringer.smooth_string(sldr_int, rolling_window = rolling_window)
+    plotter.plot_joint(sldr_raw)
+    #plotter.plot_joint(sldr_int)
+    #plotter.plot_joint(sldr_smt)
+
+    hnch_raw = stringer.make_strings(joint_hnch, prob_floor=prob_floor)
+    hnch_int = stringer.linear_interp(hnch_raw, tenacity=tenacity)
+    hnch_smt = stringer.smooth_string(hnch_int, rolling_window = rolling_window)
+    plotter.plot_joint(hnch_raw)
+    #plotter.plot_joint(hnch_int)
+    #plotter.plot_joint(hnch_smt)
+
+    head_raw = stringer.make_strings(joint_head, prob_floor=prob_floor)
+    head_int = stringer.linear_interp(head_raw, tenacity=tenacity)
+    head_smt = stringer.smooth_string(head_int, rolling_window = rolling_window)
+    plotter.plot_joint(head_raw)
+    #plotter.plot_joint(head_int)
+    #plotter.plot_joint(head_smt)
+
+    nose_raw = stringer.make_strings(joint_nose, prob_floor=prob_floor)
+    nose_int = stringer.linear_interp(nose_raw, tenacity=tenacity)
+    nose_smt = stringer.smooth_string(nose_int, rolling_window = rolling_window)
+    plotter.plot_joint(nose_raw)
+    #plotter.plot_joint(nose_int)
+    #plotter.plot_joint(nose_smt)
+
+    #Score
+    print()
+    print('sldr')
+    score_sldr = score_track_newvis(sldr_smt, fps, ppm)
+    print()
+    print('hnch')
+    score_hnch = score_track_newvis(hnch_smt, fps, ppm)
+    print()
+    print('head')
+    score_head = score_track_newvis(head_smt, fps, ppm)
+    print()
+    print('nose')
+    score_nose = score_track_newvis(nose_smt, fps, ppm)
 
     return([('sldr',score_sldr),('hnch',score_hnch),('head',score_head),
         ('nose',score_nose)])

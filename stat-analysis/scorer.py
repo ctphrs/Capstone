@@ -19,8 +19,9 @@ def visible_time(euclid_string):
     frac = 1.0 - (zeroes / total)
 
     #We never want to end up dividing by zero!
-    if frac == 0.0:
-        return 1.0
+    #NOTE: this has been taken care of later in the process.
+    #if frac == 0.0:
+    #    return 1.0
 
     return frac
 

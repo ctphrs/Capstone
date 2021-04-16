@@ -54,7 +54,7 @@ def encode_960(h264_file):
     mp4name = name + '.mp4'
 
     #re-encode. this IS a blocking function, thanks!
-    subprocess.run(['ffmpeg', '-i', h264_file, '-vf', 'scale=960:-1', mp4name])
+    subprocess.run(['ffmpeg', '-i', h264_file, '-vf', 'scale=-1:720', '-b:v', '15M',  mp4name])
 
     #Return name of new video
     return mp4name
@@ -65,6 +65,10 @@ def encode_960(h264_file):
 def dlc_analyze(video_file, config_path):
     #Run all DLC stuff to analyze it.
     deeplabcut.analyze_videos(config_path,[video_file], shuffle=1, save_as_csv=True, videotype='.mp4')
+
+def dlc_label(video_file, config_path):
+    #Make labeled video
+    deeplabcut.create_labeled_video(config_path, [video_file])
 
 
 #Check for file existence, then delete.
@@ -93,6 +97,12 @@ def delete_all(dir_name):
     list_of_files = glob.glob(dir_name + '/*')
     for file_or_dir in list_of_files:
         os.remove(file_or_dir)
+    return
+
+def archive_all(dir_name, dest_name):
+    list_of_files = glob.glob(dir_name + '/*')
+    for file_or_dir in list_of_files:
+        new_file = shutil.move(file_or_dir, dest_name)
     return
 
 #insert movement data into SPCA database
